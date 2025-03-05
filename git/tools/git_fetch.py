@@ -36,6 +36,7 @@ class Args(NamedTuple):
     work_tree: Path
     repo: str
     rev: str
+    recursive: str
 
 
 def arg_parse() -> Args:
@@ -44,6 +45,7 @@ def arg_parse() -> Args:
     parser.add_argument("--work-tree", type=Path, required=True)
     parser.add_argument("--repo", type=str, required=True)
     parser.add_argument("--rev", type=str, required=True)
+    parser.add_argument("--recursive", choices=["yes", "no"], required=True)
     return Args(**vars(parser.parse_args()))
 
 
@@ -66,7 +68,7 @@ def main() -> None:
     git_configure(git)
     run([*git, "remote", "remove", "origin"], check=False)
     run([*git, "remote", "add", "origin", args.repo], check=True)
-    run([*git, "fetch", "--depth=1", "origin", args.rev], check=True)
+    run([*git, "fetch", "--depth=1", "--recurse-submodules=%s" % args.recursive, "origin", args.rev], check=True)
 
     fetch_head = run([*git, "rev-parse", "FETCH_HEAD"], check=True)
     fetch_head = fetch_head.strip()

@@ -33,6 +33,7 @@ def git_fetch_impl(ctx: AnalysisContext) -> list[Provider]:
         cmd_args("--work-tree=", work_tree.as_output(), delimiter = ""),
         cmd_args("--repo=", ctx.attrs.repo, delimiter = ""),
         cmd_args("--rev=", rev, delimiter = ""),
+        cmd_args("--recursive=", "yes" if ctx.attrs.recursive else "no", delimiter=""),
     ]
 
     ctx.actions.run(

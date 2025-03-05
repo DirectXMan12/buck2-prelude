@@ -35,6 +35,7 @@ git_fetch = prelude_rule(
             "default_host_platform": attrs.option(attrs.configuration_label(), default = None),
             "labels": attrs.list(attrs.string(), default = []),
             "licenses": attrs.list(attrs.source(), default = []),
+            "recursive": attrs.bool(default=False),
             "_git_fetch_tool": attrs.default_only(attrs.exec_dep(providers = [RunInfo], default = "prelude//git/tools:git_fetch")),
         }
     ),
