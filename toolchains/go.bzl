@@ -87,6 +87,7 @@ def _system_go_toolchain_impl(ctx):
             linker_flags = [],
             assembler_flags = [],
             compiler_flags = [],
+            c_compiler_flags = [],
         ),
     ]
 
